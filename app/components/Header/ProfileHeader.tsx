@@ -1,7 +1,7 @@
 // ProfileHeader.tsx
 'use client';
 import React, { useState, useRef, ChangeEvent } from 'react';
-import { Phone, Mail, Linkedin, MapPin, Camera, Edit3, Upload, X } from 'lucide-react';
+import { Phone, Mail, Linkedin, MapPin, Camera, Edit3, Upload, X, Download } from 'lucide-react';
 import styles from './ProfileHeader.module.scss';
 
 interface ProfileHeaderProps {
@@ -14,6 +14,8 @@ interface ProfileHeaderProps {
   linkedinUsername?: string;
   initialProfilePhoto?: string;
   initialBackgroundPhoto?: string;
+  cvUrl?: string;
+  cvFileName?: string;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -24,14 +26,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   email = "yabeszega1997@gmail.com",
   linkedinUrl = "https://linkedin.com/in/yabes-zega",
   linkedinUsername = "yabes-zega",
-  initialProfilePhoto = null,
-  initialBackgroundPhoto = null
+  initialProfilePhoto = '/yabes.jpg',
+  initialBackgroundPhoto = '/bg.jpg',
+  cvUrl = '/CV YABES ELKANA ZEGA.pdf',
+  cvFileName = 'Yabes_Elkana_Zega_CV.pdf',
 }) => {
   const [profilePhoto, setProfilePhoto] = useState<string | null>(initialProfilePhoto);
   const [backgroundPhoto, setBackgroundPhoto] = useState<string | null>(initialBackgroundPhoto);
   const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
   const [isEditingBackground, setIsEditingBackground] = useState<boolean>(false);
-  
+
   const profileInputRef = useRef<HTMLInputElement>(null);
   const backgroundInputRef = useRef<HTMLInputElement>(null);
 
@@ -91,6 +95,19 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     backgroundInputRef.current?.click();
   };
 
+  const handleDownloadCV = (): void => {
+    if (cvUrl) {
+      const link = document.createElement('a');
+      link.href = cvUrl;
+      link.download = cvFileName || 'CV.pdf';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   // Get initials from name
   const getInitials = (fullName: string): string => {
     return fullName
@@ -107,7 +124,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <div className={styles.backgroundSection}>
         {/* Background Image or Gradient */}
         {backgroundPhoto ? (
-          <div 
+          <div
             className={styles.backgroundImage}
             style={{ backgroundImage: `url(${backgroundPhoto})` }}
           >
@@ -118,7 +135,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <div className={styles.backgroundOverlay}></div>
           </div>
         )}
-        
+
         {/* Background Photo Controls */}
         <div className={styles.backgroundControls}>
           <button
@@ -174,7 +191,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 </div>
               )}
             </div>
-            
+
             {/* Profile Photo Controls */}
             <div className={styles.profilePhotoOverlay}>
               <button
@@ -273,6 +290,22 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 <p className={styles.contactValue}>{linkedinUsername}</p>
               </div>
             </a>
+
+          </div>
+          <div className={styles.cvCardWrapper}>
+            <button
+              onClick={handleDownloadCV}
+              className={`${styles.contactCards} ${styles.cvCards}`}
+              aria-label="Download CV"
+              type="button"
+            >
+              <div className={styles.contactIcon}>
+                <Download size={20} />
+              </div>
+              <div className={styles.contactInfo}>
+                <p className={styles.contactValue}>Download CV</p>
+              </div>
+            </button>
           </div>
         </div>
       </div>

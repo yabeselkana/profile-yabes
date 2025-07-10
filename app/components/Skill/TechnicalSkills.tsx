@@ -2,6 +2,7 @@
 import React from 'react';
 import styles from './TechnicalSkills.module.scss';
 
+
 const TechnicalSkills = () => {
   const frontendSkills = [
     { name: 'HTML', level: 90, color: '#e34f26' },
@@ -23,14 +24,20 @@ const TechnicalSkills = () => {
     { name: 'PostgreSQL', level: 80, color: '#336791' }
   ];
 
-  const SkillCard = ({ skill, index }) => (
+  interface Skill {
+    name: string;
+    level: number;
+    color: string;
+  }
+
+  const SkillCard: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => (
     <div 
       className={styles.skillCard}
       style={{ 
         animationDelay: `${index * 0.1}s`,
         '--skill-color': skill.color,
         '--skill-level': `${skill.level}%`
-      }}
+      } as React.CSSProperties}
     >
       <div className={styles.skillHeader}>
         <span className={styles.skillName}>{skill.name}</span>

@@ -1,4 +1,8 @@
 // components/page.module.scss
+
+// html {
+//   scroll-behavior: smooth;
+// }
 .container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -305,9 +309,7 @@
 }
 
 // Smooth scroll behavior
-html {
-  scroll-behavior: smooth;
-}
+
 
 // Animations
 @keyframes slideDown {

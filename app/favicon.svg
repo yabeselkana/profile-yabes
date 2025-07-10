@@ -1,0 +1,20 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#2563eb" stroke="#1e40af" stroke-width="4"/>
+  
+  <!-- Inner circle for contrast -->
+  <circle cx="128" cy="128" r="100" fill="#3b82f6" opacity="0.8"/>
+  
+  <!-- Letter Y -->
+  <path d="M80 80 L108 120 L128 90 L148 120 L176 80" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="128" y1="90" x2="128" y2="140" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Text "YABES" -->
+  <text x="128" y="180" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">YABES</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="60" cy="60" r="4" fill="white" opacity="0.6"/>
+  <circle cx="196" cy="60" r="4" fill="white" opacity="0.6"/>
+  <circle cx="60" cy="196" r="4" fill="white" opacity="0.6"/>
+  <circle cx="196" cy="196" r="4" fill="white" opacity="0.6"/>
+</svg>

@@ -1,0 +1,643 @@
+// AboutMe.module.scss
+
+// Variables
+$primary-color: #3b82f6;
+$secondary-color: #8b5cf6;
+$accent-color: #10b981;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$background-light: #f8fafc;
+$background-card: #ffffff;
+$border-color: #e5e7eb;
+
+// Gradients
+$primary-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+$accent-gradient: linear-gradient(135deg, #10b981, #3b82f6);
+$warm-gradient: linear-gradient(135deg, #f59e0b, #ef4444);
+$cool-gradient: linear-gradient(135deg, #06b6d4, #3b82f6);
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin transition-all($duration: 0.3s) {
+  transition: all $duration ease;
+}
+
+@mixin hover-lift {
+  transform: translateY(-2px);
+  box-shadow: $shadow-lg;
+}
+
+@mixin fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+@mixin fade-in-up-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// Keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width);
+  }
+}
+
+// Main Component
+.aboutSection {
+  padding: 4rem 0;
+  background: $background-light;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+    pointer-events: none;
+  }
+
+  &.visible {
+    .header {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .contentGrid > div {
+      @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+          animation: fadeInUp 0.8s ease #{$i * 0.2}s forwards;
+        }
+      }
+    }
+
+    .skillProgress {
+      animation: progressFill 1.5s ease 0.5s forwards;
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Header
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  @include fade-in-up;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: $text-primary;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.titleAccent {
+  color: $primary-color;
+  font-size: 3.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
+}
+
+.titleUnderline {
+  width: 80px;
+  height: 4px;
+  background: $primary-gradient;
+  margin: 0 auto;
+  border-radius: 2px;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: $accent-color;
+    border-radius: 1px;
+  }
+}
+
+// Content Grid
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  > div {
+    @include fade-in-up;
+  }
+}
+
+// Introduction Section
+.introSection {
+  grid-column: 1 / -1;
+  background: $background-card;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: $shadow-md;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: $primary-gradient;
+  }
+
+  &:hover {
+    @include hover-lift;
+  }
+}
+
+.introContent {
+  position: relative;
+}
+
+.introIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: $primary-gradient;
+  border-radius: 50%;
+  color: white;
+  margin-bottom: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.introText {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: $text-secondary;
+  margin-bottom: 1.5rem;
+}
+
+.highlight {
+  color: $primary-color;
+  font-weight: 600;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $primary-gradient;
+    border-radius: 1px;
+  }
+}
+
+.company {
+  color: $accent-color;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.workStyle {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.workStyleItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  font-weight: 500;
+  color: $text-primary;
+  @include transition-all;
+
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+}
+
+.workStyleIcon {
+  color: $primary-color;
+}
+
+// Section Titles
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 1.5rem;
+
+  svg {
+    color: $primary-color;
+  }
+}
+
+// Skills Section
+.skillsSection {
+  background: $background-card;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: $shadow-md;
+  @include transition-all;
+
+  &:hover {
+    @include hover-lift;
+  }
+}
+
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skillItem {
+  @include transition-all;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid $border-color;
+
+  &:hover, &.active {
+    background: rgba(59, 130, 246, 0.02);
+    border-color: rgba(59, 130, 246, 0.2);
+    transform: translateX(5px);
+  }
+}
+
+.skillHeader {
+  @include flex-between;
+  margin-bottom: 0.75rem;
+}
+
+.skillIcon {
+  color: $primary-color;
+  margin-right: 0.5rem;
+}
+
+.skillName {
+  flex: 1;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.skillPercentage {
+  font-weight: 600;
+  color: $primary-color;
+  font-size: 0.875rem;
+}
+
+.skillBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skillProgress {
+  height: 100%;
+  background: $primary-gradient;
+  border-radius: 4px;
+  width: 0%;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+}
+
+// Achievements Section
+.achievementsSection {
+  background: $background-card;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: $shadow-md;
+  @include transition-all;
+
+  &:hover {
+    @include hover-lift;
+  }
+}
+
+.achievementsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievementItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid $border-color;
+  @include transition-all;
+
+  &:hover {
+    background: rgba(16, 185, 129, 0.02);
+    border-color: rgba(16, 185, 129, 0.2);
+    transform: translateX(5px);
+
+    .achievementArrow {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+  }
+}
+
+.achievementIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: $accent-gradient;
+  border-radius: 50%;
+  color: white;
+  flex-shrink: 0;
+}
+
+.achievementContent {
+  flex: 1;
+}
+
+.achievementTitle {
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 0.25rem;
+}
+
+.achievementDescription {
+  color: $text-secondary;
+  font-size: 0.875rem;
+}
+
+.achievementArrow {
+  color: $accent-color;
+  opacity: 0.5;
+  @include transition-all;
+}
+
+// Traits Section
+.traitsSection {
+  background: $background-card;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: $shadow-md;
+  @include transition-all;
+
+  &:hover {
+    @include hover-lift;
+  }
+}
+
+.traitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.traitItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  @include transition-all;
+
+  &:hover {
+    transform: translateX(5px);
+
+    .traitDot {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.traitDot {
+  width: 8px;
+  height: 8px;
+  background: $warm-gradient;
+  border-radius: 50%;
+  flex-shrink: 0;
+  @include transition-all;
+}
+
+.traitText {
+  font-weight: 500;
+  color: $text-primary;
+}
+
+// CTA Section
+.ctaSection {
+  background: $primary-gradient;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 4s infinite;
+  }
+}
+
+.ctaContent {
+  position: relative;
+  z-index: 1;
+}
+
+.ctaTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.ctaText {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  @include transition-all;
+//   @include backdrop-blur;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .aboutSection {
+    padding: 2rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .introSection,
+  .skillsSection,
+  .achievementsSection,
+  .traitsSection {
+    padding: 1.5rem;
+  }
+
+  .workStyle {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ctaSection {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .titleAccent {
+    font-size: 2.5rem;
+  }
+
+  .introText {
+    font-size: 1rem;
+  }
+
+  .achievementItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.25rem;
+  }
+}

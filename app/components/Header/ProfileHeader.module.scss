@@ -1,0 +1,398 @@
+// ProfileHeader.module.scss
+
+// Variables
+$primary-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #4f46e5);
+$phone-gradient: linear-gradient(135deg, #dbeafe, #bfdbfe);
+$phone-hover-gradient: linear-gradient(135deg, #bfdbfe, #93c5fd);
+$email-gradient: linear-gradient(135deg, #dcfce7, #bbf7d0);
+$email-hover-gradient: linear-gradient(135deg, #bbf7d0, #86efac);
+$linkedin-gradient: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+$linkedin-hover-gradient: linear-gradient(135deg, #e9d5ff, #d8b4fe);
+
+$phone-color: #3b82f6;
+$email-color: #10b981;
+$linkedin-color: #8b5cf6;
+
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin transition-all {
+  transition: all 0.3s ease;
+}
+
+@mixin hover-scale {
+  transform: scale(1.05);
+}
+
+@mixin backdrop-blur {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+// Main Container
+.profileContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: $shadow-2xl;
+  overflow: hidden;
+}
+
+// Background Section
+.backgroundSection {
+  position: relative;
+  height: 16rem;
+  
+  &:hover .backgroundControls {
+    opacity: 1;
+  }
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.backgroundGradient {
+  width: 100%;
+  height: 100%;
+  background: $primary-gradient;
+}
+
+.backgroundOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.backgroundControls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0;
+  @include transition-all;
+}
+
+.controlButton {
+  background: rgba(255, 255, 255, 0.2);
+  @include backdrop-blur;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  @include transition-all;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Edit Menu
+.editMenu {
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: $shadow-lg;
+  padding: 0.5rem;
+  z-index: 10;
+}
+
+.profileEditMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: $shadow-lg;
+  padding: 0.5rem;
+  z-index: 10;
+  min-width: max-content;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 0.75rem;
+  color: #374151;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  @include transition-all;
+  white-space: nowrap;
+  
+  &:hover {
+    background: #f3f4f6;
+  }
+  
+  &.removeItem {
+    color: #dc2626;
+    
+    &:hover {
+      background: #fef2f2;
+    }
+  }
+}
+
+// Profile Content
+.profileContent {
+  position: relative;
+  padding: 0 2rem 2rem;
+}
+
+// Profile Photo
+.profilePhotoWrapper {
+  position: absolute;
+  top: -4rem;
+  left: 2rem;
+}
+
+.profilePhotoContainer {
+  position: relative;
+  
+  &:hover .profilePhotoOverlay {
+    opacity: 1;
+  }
+}
+
+.profilePhoto {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  border: 4px solid white;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+  background: $primary-gradient;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileInitials {
+  @include flex-center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.profilePhotoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 9999px;
+  opacity: 0;
+  @include transition-all;
+  @include flex-center;
+}
+
+.photoControlButton {
+  color: white;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  @include transition-all;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+// Profile Info
+.profileInfo {
+  padding-top: 5rem;
+  margin-left: 0;
+}
+
+.profileDetails {
+  margin-bottom: 1.5rem;
+}
+
+.profileName {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.profileTitle {
+  font-size: 1.25rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.profileLocation {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+}
+
+// Contact Grid
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  @include transition-all;
+  
+  &:hover {
+    @include hover-scale;
+  }
+  
+  &.phoneCard {
+    background: $phone-gradient;
+    
+    &:hover {
+      background: $phone-hover-gradient;
+    }
+    
+    .contactIcon {
+      background: $phone-color;
+    }
+  }
+  
+  &.emailCard {
+    background: $email-gradient;
+    
+    &:hover {
+      background: $email-hover-gradient;
+    }
+    
+    .contactIcon {
+      background: $email-color;
+    }
+  }
+  
+  &.linkedinCard {
+    background: $linkedin-gradient;
+    
+    &:hover {
+      background: $linkedin-hover-gradient;
+    }
+    
+    .contactIcon {
+      background: $linkedin-color;
+    }
+  }
+}
+
+.contactIcon {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  @include flex-center;
+}
+
+.contactInfo {
+  flex: 1;
+}
+
+.contactLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.125rem;
+}
+
+.contactValue {
+  font-weight: 600;
+  color: #111827;
+}
+
+// Hidden Input
+.hiddenInput {
+  display: none;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .profileContainer {
+    border-radius: 0.5rem;
+    margin: 1rem;
+  }
+  
+  .backgroundSection {
+    height: 12rem;
+  }
+  
+  .profileContent {
+    padding: 0 1rem 1rem;
+  }
+  
+  .profilePhotoWrapper {
+    left: 1rem;
+    top: -3rem;
+  }
+  
+  .profilePhoto {
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .profileName {
+    font-size: 1.875rem;
+  }
+  
+  .profileTitle {
+    font-size: 1.125rem;
+  }
+  
+  .profileInfo {
+    padding-top: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileName {
+    font-size: 1.5rem;
+  }
+  
+  .contactGrid {
+    gap: 0.75rem;
+  }
+  
+  .contactCard {
+    padding: 0.75rem;
+  }
+}

@@ -77,7 +77,7 @@ const projects = [
     description: 'Developing a ticket booking platform that allows users to search, compare, and purchase travel tickets with a seamless and responsive user experience. Features real-time search and secure payment integration.',
     technologies: ['React', 'SCSS', 'Firebase'],
     image: image6,
-    link: 'https://trip-tales-six.vercel.app/',
+    link: 'https://triptales.dk/',
     status: 'in-progress',
   }
 ];

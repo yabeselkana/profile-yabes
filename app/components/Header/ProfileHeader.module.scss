@@ -195,7 +195,7 @@ $shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 // Profile Content
 .profileContent {
   position: relative;
-  padding: 0 2rem 2rem;
+  padding:  2rem 2rem;
 }
 
 // Profile Photo
@@ -385,19 +385,22 @@ $shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
 // Responsive Design
 @media (max-width: 768px) {
+
+  .profileContent {
+  
+  padding: 1rem;
+  }
+  .backgroundImage {
+    background-size: contain;
+  }
   .profileContainer {
     border-radius: 0.5rem;
-    margin: 1rem;
   }
   
   .backgroundSection {
     height: 12rem;
   }
-  
-  .profileContent {
-    padding: 0 1rem 1rem;
-  }
-  
+
   .profilePhotoWrapper {
     left: 1rem;
     top: -3rem;

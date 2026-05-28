@@ -1,8 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProjectExperience.module.scss';
 import Image from 'next/image';
+import type { StaticImageData } from 'next/image';
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useI18n } from '../i18n';
 import image1 from '../../../public/Experience/sf.png';
 import image2 from '../../../public/Experience/carbon-clear.png';  
 import image3 from '../../../public/Experience/digital-miners.png';
@@ -13,7 +16,19 @@ import image7 from '../../../public/Experience/cisl.png';
 
  
 
-const projects = [
+type Project = {
+  name: string;
+  company: string;
+  date: string;
+  description: string;
+  technologies: string[];
+  image?: StaticImageData;
+  link?: string;
+  status?: 'in-progress';
+  visualLabel?: string;
+};
+
+const projects: Project[] = [
   {
     name: 'SWISFROM',
     company: 'PT. Senja Solusi',
@@ -79,61 +94,173 @@ const projects = [
     image: image6,
     link: 'https://triptales.dk/',
     status: 'in-progress',
+  },
+  {
+    name: 'StarHockey',
+    company: 'PT. Senja Solusi',
+    date: '2024',
+    description: 'Delivered and maintained a WordPress-based website listed in the CV project experience, focused on responsive pages and reliable content presentation.',
+    technologies: ['WordPress', 'SCSS', 'Website Maintenance'],
+    visualLabel: 'Sports Website',
+  },
+  {
+    name: 'Hanseatic Healthcare',
+    company: 'PT. Senja Solusi',
+    date: '2024',
+    description: 'Worked on a healthcare website project with structured content pages, responsive layouts, and WordPress-based publishing workflow.',
+    technologies: ['WordPress', 'SCSS', 'Healthcare Website'],
+    visualLabel: 'Healthcare Platform',
+  },
+  {
+    name: 'Auswanderer',
+    company: 'PT. Senja Solusi',
+    date: '2024',
+    description: 'Developed and maintained a WordPress website for international content delivery with focus on clean layout, content structure, and usability.',
+    technologies: ['WordPress', 'SCSS', 'Content Website'],
+    visualLabel: 'International Website',
+  },
+  {
+    name: 'English Language Center (ELC)',
+    company: 'PT. Senja Solusi',
+    date: '2024',
+    description: 'Built and maintained an education-oriented website for language learning information, responsive presentation, and user-friendly content access.',
+    technologies: ['WordPress', 'SCSS', 'Education Website'],
+    visualLabel: 'Education Website',
+  },
+  {
+    name: 'Company Website',
+    company: 'CV. POINT',
+    date: '2017',
+    description: 'Designed a company website while working in IT support, alongside wireless network inspection and client-server system checking.',
+    technologies: ['Company Website', 'Network Support', 'Client-Server'],
+    visualLabel: 'IT Support Project',
   }
 ];
 
 const ProjectExperience = () => {
+  const { t } = useI18n();
+  const [activeProject, setActiveProject] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveProject((current) => (current + 1) % projects.length);
+    }, 6500);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const goToProject = (direction: 'next' | 'prev') => {
+    setActiveProject((current) => {
+      if (direction === 'next') return (current + 1) % projects.length;
+      return current === 0 ? projects.length - 1 : current - 1;
+    });
+  };
+
+  const project = projects[activeProject];
+
+  const projectVisual = (
+    <div className={styles.imagePanel}>
+      {project.status === 'in-progress' && (
+        <span className={styles.badge}>In Progress</span>
+      )}
+      {project.image ? (
+        <Image
+          src={project.image}
+          alt={project.name}
+          fill
+          className={styles.image}
+          sizes="(max-width: 860px) 100vw, 50vw"
+          priority={activeProject === 0}
+        />
+      ) : (
+        <div className={styles.placeholderVisual}>
+          <span>{String(activeProject + 1).padStart(2, '0')}</span>
+          <strong>{project.visualLabel || 'Website Project'}</strong>
+          <small>{project.company}</small>
+        </div>
+      )}
+    </div>
+  );
+
+  const projectDetails = (
+    <div className={styles.contentPanel}>
+      <span className={styles.projectMeta}>
+        {String(activeProject + 1).padStart(2, '0')} / {project.date}
+      </span>
+      <div className={styles.titleLine}>
+        <h3>{project.name}</h3>
+        {project.link && <ArrowUpRight size={18} />}
+      </div>
+      <p className={styles.company}>{project.company}</p>
+      <p className={styles.description}>{project.description}</p>
+
+      <ul className={styles.techList}>
+        {project.technologies.map((tech) => (
+          <li key={tech}>{tech}</li>
+        ))}
+      </ul>
+
+      {project.link && (
+        <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
+          {t('projects.open')}
+          <ArrowUpRight size={16} />
+        </a>
+      )}
+    </div>
+  );
+
   return (
     <section className={styles.projectSection}>
-      <h2 className={styles.sectionTitle}>Projects</h2>
-      <div className={styles.cardGrid}>
-        {projects.map((project, index) => (
-          <a
-            key={index}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.cardLink}
-          >
-            <div className={styles.card}>
-              {project.status === 'in-progress' && (
-                <span className={styles.badge}>In Progress</span>
-              )}
-              
-              {/* Flip Container - Only this part flips */}
-              <div className={styles.flipContainer}>
-                {/* Image Face (Front) */}
-                <div className={styles.imageFace}>
-                  <Image
-                    src={project.image}
-                    alt={project.name}
-                    fill
-                    className={styles.image}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
+      <div className={styles.headerRow}>
+        <div className={styles.header}>
+          <h2 className={styles.sectionTitle}>{t('projects.title')}</h2>
+          <p className={styles.subtitle}>
+            {t('projects.subtitle')}
+          </p>
+        </div>
 
-                {/* Description Face (Back) */}
-                <div className={styles.descriptionFace}>
-                  <div className={styles.descriptionContent}>
-                    <p className={styles.description}>{project.description}</p>
-                    <div className={styles.techList}>
-                      {project.technologies.map((tech, i) => (
-                        <span key={i} className={styles.tech}>{tech}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className={styles.sliderControls} aria-label="Project slider controls">
+          <button type="button" onClick={() => goToProject('prev')} aria-label="Previous project">
+            <ChevronLeft size={20} />
+          </button>
+          <span>{String(activeProject + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+          <button type="button" onClick={() => goToProject('next')} aria-label="Next project">
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
 
-              {/* Static Content - Always visible at bottom */}
-              <div className={styles.cardContent}>
-                <h3>{project.name}</h3>
-                <p className={styles.meta}>{project.company} • {project.date}</p>
-              </div>
-            </div>
-          </a>
-        ))}
+      <div className={styles.sliderShell}>
+        <article className={styles.projectSlide} key={project.name}>
+          {projectVisual}
+          {projectDetails}
+        </article>
+
+        <div className={styles.dots} aria-label="Select featured project">
+          {projects.map((item, index) => (
+            <button
+              key={item.name}
+              type="button"
+              className={index === activeProject ? styles.activeDot : ''}
+              onClick={() => setActiveProject(index)}
+              aria-label={`Show ${item.name}`}
+            />
+          ))}
+        </div>
+
+        <div className={styles.thumbnailRail}>
+          {projects.slice(0, 6).map((item, index) => (
+            <button
+              key={item.name}
+              type="button"
+              className={index === activeProject ? styles.activeThumb : ''}
+              onClick={() => setActiveProject(index)}
+            >
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{item.name}</strong>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );

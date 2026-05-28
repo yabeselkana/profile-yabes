@@ -1,6 +1,51 @@
-body{
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-ink: #111827;
+  --color-navy: #0f172a;
+  --color-text: #243044;
+  --color-muted: #64748b;
+  --color-line: #dbe4ef;
+  --color-line-strong: #c7ccd3;
+  --color-surface: #ffffff;
+  --color-soft: #f4f6f8;
+  --color-soft-blue: #eef4ff;
+  --color-soft-panel: #e7ebef;
+  --color-blue: #2563eb;
+  --color-olive: #8fa36f;
+  --color-olive-soft: #dfe8cf;
+  --color-success: #16a34a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: var(--color-soft);
+  color: var(--color-text);
+  font-family: var(--font-body), Inconsolata, monospace;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title,
+[class*='title'],
+[class*='Title'] {
+  font-family: var(--font-title), Poppins, Arial, sans-serif;
+  letter-spacing: 0;
 }

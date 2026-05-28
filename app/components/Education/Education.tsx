@@ -1,8 +1,13 @@
+'use client';
+
 // components/Education/Education.tsx
 import React from 'react';
 import styles from './Education.module.scss';
+import { useI18n } from '../i18n';
 
 const Education = () => {
+  const { t } = useI18n();
+
   const educationData = [
     {
       id: 1,
@@ -60,14 +65,8 @@ const Education = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>
-            <span className={styles.titleIcon}>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 10V6C22 4.89543 21.1046 4 20 4H4C2.89543 4 2 4.89543 2 6V10M22 10L18 14L16 12L12 16L8 12L6 14L2 10M22 10V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
-            <span className={styles.titleText}>Education</span>
+            <span className={styles.titleText}>{t('education.title')}</span>
           </h2>
-          <div className={styles.titleUnderline}></div>
         </div>
 
         <div className={styles.timeline}>
@@ -90,7 +89,7 @@ const Education = () => {
                   <div className={styles.period}>
                     <span className={styles.periodText}>{edu.period}</span>
                     {edu.gpa && (
-                      <span className={styles.gpa}>GPA: {edu.gpa}</span>
+                      <span className={styles.gpa}>{t('education.gpa')}: {edu.gpa}</span>
                     )}
                   </div>
                 </div>
@@ -99,7 +98,7 @@ const Education = () => {
                   <p className={styles.description}>{edu.description}</p>
                   
                   <div className={styles.achievements}>
-                    <h4 className={styles.achievementsTitle}>Key Achievements:</h4>
+                    <h4 className={styles.achievementsTitle}>{t('education.achievements')}</h4>
                     <ul className={styles.achievementsList}>
                       {edu.achievements.map((achievement, i) => (
                         <li key={i} className={styles.achievementItem}>
@@ -117,12 +116,12 @@ const Education = () => {
                 
                 <div className={styles.cardFooter}>
                   <div className={styles.completedDate}>
-                    <span className={styles.completedLabel}>Completed:</span>
+                    <span className={styles.completedLabel}>{t('education.completed')}</span>
                     <span className={styles.completedValue}>{edu.completedDate}</span>
                   </div>
                   <div className={styles.educationType}>
                     <span className={`${styles.typeTag} ${styles[edu.type]}`}>
-                      {edu.type === 'degree' ? 'Bachelor Degree' : 'Bootcamp'}
+                      {edu.type === 'degree' ? t('education.degree') : 'Bootcamp'}
                     </span>
                   </div>
                 </div>

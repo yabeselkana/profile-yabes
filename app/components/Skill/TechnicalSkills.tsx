@@ -1,100 +1,108 @@
+'use client';
 
 import React from 'react';
+import { Braces, BrainCircuit, Database, GitBranch, Layers3, ServerCog } from 'lucide-react';
 import styles from './TechnicalSkills.module.scss';
-
+import { useI18n } from '../i18n';
 
 const TechnicalSkills = () => {
-  const frontendSkills = [
-    { name: 'HTML', level: 90, color: '#e34f26' },
-    { name: 'CSS', level: 85, color: '#1572b6' },
-    { name: 'SCSS', level: 80, color: '#cf649a' },
-    { name: 'JavaScript', level: 85, color: '#f7df1e' },
-    { name: 'TypeScript', level: 75, color: '#3178c6' },
-    { name: 'jQuery', level: 70, color: '#0769ad' },
-    { name: 'Vue.js', level: 80, color: '#4fc08d' },
-    { name: 'React.js', level: 85, color: '#61dafb' },
-    { name: 'React Native', level: 75, color: '#61dafb' }
+  const { t } = useI18n();
+
+  const skillGroups = [
+    {
+      title: 'Frontend Engineering',
+      description: t('skills.frontend.description'),
+      icon: <Layers3 size={22} />,
+      tools: ['HTML', 'CSS', 'SCSS', 'JavaScript', 'TypeScript', 'React.js', 'Next.js', 'Vue.js', 'React Native'],
+      workflow: 'UI architecture, component structure, responsive layout',
+    },
+    {
+      title: 'Backend & Data',
+      description: t('skills.backend.description'),
+      icon: <ServerCog size={22} />,
+      tools: ['PHP', 'Laravel', 'Express.js', 'Lumen API', 'PostgreSQL', 'REST API'],
+      workflow: 'API design, database flow, integration planning',
+    },
+    {
+      title: 'AI & Automation',
+      description: t('skills.ai.description'),
+      icon: <BrainCircuit size={22} />,
+      tools: ['AI Workflow', 'Prompt Planning', 'Automation Logic', 'Documentation', 'Reporting'],
+      workflow: 'Process mapping, AI-assisted flow, practical implementation',
+    },
   ];
 
-  const backendSkills = [
-    { name: 'PHP', level: 85, color: '#777bb4' },
-    { name: 'Laravel', level: 80, color: '#ff2d20' },
-    { name: 'Express.js', level: 75, color: '#000000' },
-    { name: 'API Lumen', level: 70, color: '#e74c3c' },
-    { name: 'PostgreSQL', level: 80, color: '#336791' }
+  const capabilityHighlights = [
+    { label: 'System Thinking', icon: <GitBranch size={18} /> },
+    { label: 'Clean Code Structure', icon: <Braces size={18} /> },
+    { label: 'Data-Driven Apps', icon: <Database size={18} /> },
   ];
-
-  interface Skill {
-    name: string;
-    level: number;
-    color: string;
-  }
-
-  const SkillCard: React.FC<{ skill: Skill; index: number }> = ({ skill, index }) => (
-    <div 
-      className={styles.skillCard}
-      style={{ 
-        animationDelay: `${index * 0.1}s`,
-        '--skill-color': skill.color,
-        '--skill-level': `${skill.level}%`
-      } as React.CSSProperties}
-    >
-      <div className={styles.skillHeader}>
-        <span className={styles.skillName}>{skill.name}</span>
-        <span className={styles.skillLevel}>{skill.level}%</span>
-      </div>
-      <div className={styles.skillBar}>
-        <div 
-          className={styles.skillProgress}
-          style={{ width: `${skill.level}%`, backgroundColor: skill.color }}
-        />
-      </div>
-    </div>
-  );
 
   return (
     <section className={styles.technicalSkills}>
       <div className={styles.container}>
-        <h2 className={styles.title}>
-          <span className={styles.titleText}>Technical Skills</span>
-          <div className={styles.titleUnderline}></div>
-        </h2>
-        
-        <div className={styles.skillsGrid}>
-          <div className={styles.skillCategory}>
-            <div className={styles.categoryHeader}>
-              <div className={styles.categoryIcon}>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <h3 className={styles.categoryTitle}>Frontend</h3>
-            </div>
-            <div className={styles.skillsList}>
-              {frontendSkills.map((skill, index) => (
-                <SkillCard key={skill.name} skill={skill} index={index} />
-              ))}
-            </div>
-          </div>
+        <div className={styles.heading}>
+          <span className={styles.eyebrow}>{t('skills.eyebrow')}</span>
+          <h2 className={styles.title}>{t('skills.title')}</h2>
+          <p className={styles.subtitle}>
+            {t('skills.subtitle')}
+          </p>
+        </div>
 
-          <div className={styles.skillCategory}>
-            <div className={styles.categoryHeader}>
-              <div className={styles.categoryIcon}>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
-                  <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" strokeWidth="2"/>
-                  <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" strokeWidth="2"/>
-                </svg>
+        <div className={styles.highlightRow}>
+          {capabilityHighlights.map((item) => (
+            <div key={item.label} className={styles.highlightItem}>
+              {item.icon}
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.skillsGrid}>
+          {skillGroups.map((group) => (
+            <article key={group.title} className={styles.skillCategory}>
+              <div className={styles.categoryHeader}>
+                <div className={styles.categoryIcon}>{group.icon}</div>
+                <div>
+                  <h3 className={styles.categoryTitle}>{group.title}</h3>
+                  <p className={styles.categoryDescription}>{group.description}</p>
+                </div>
               </div>
-              <h3 className={styles.categoryTitle}>Backend & Database</h3>
-            </div>
-            <div className={styles.skillsList}>
-              {backendSkills.map((skill, index) => (
-                <SkillCard key={skill.name} skill={skill} index={index} />
-              ))}
-            </div>
+
+              <div className={styles.workflowBox}>
+                <span>{t('skills.focus')}</span>
+                <strong>{group.workflow}</strong>
+              </div>
+
+              <div className={styles.skillsList}>
+                {group.tools.map((tool) => (
+                  <span key={tool} className={styles.skillChip}>{tool}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className={styles.techFlow}>
+          <div>
+            <span>01</span>
+            <strong>{t('skills.flow.analyze')}</strong>
+            <p>{t('skills.flow.analyze.text')}</p>
+          </div>
+          <div>
+            <span>02</span>
+            <strong>{t('skills.flow.design')}</strong>
+            <p>{t('skills.flow.design.text')}</p>
+          </div>
+          <div>
+            <span>03</span>
+            <strong>{t('skills.flow.build')}</strong>
+            <p>{t('skills.flow.build.text')}</p>
+          </div>
+          <div>
+            <span>04</span>
+            <strong>{t('skills.flow.improve')}</strong>
+            <p>{t('skills.flow.improve.text')}</p>
           </div>
         </div>
       </div>

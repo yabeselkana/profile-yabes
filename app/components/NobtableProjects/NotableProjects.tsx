@@ -1,8 +1,13 @@
+'use client';
+
 // components/Projects/NotableProjects.tsx
 import React from 'react';
 import styles from './NotableProjects.module.scss';
+import { useI18n } from '../i18n';
 
 const NotableProjects = () => {
+  const { t } = useI18n();
+
   const projectsData = [
     {
       id: 1,
@@ -10,7 +15,7 @@ const NotableProjects = () => {
       description: "Advanced Arduino-based system with real-time sound notifications and data logging for comprehensive air quality monitoring and environmental health assessment.",
       tags: ["Arduino", "IoT", "Environmental", "Hardware"],
       icon: "pollution",
-      status: "Completed",
+      status: t('status.completed'),
       year: "2022",
       type: "hardware"
     },
@@ -20,10 +25,75 @@ const NotableProjects = () => {
       description: "Intelligent smartphone-integrated waste management system featuring real-time monitoring, automated collection scheduling, and smart city integration capabilities.",
       tags: ["IoT", "Mobile App", "Smart City", "Sensors"],
       icon: "iot",
-      status: "Completed",
+      status: t('status.completed'),
       year: "2023",
       type: "iot"
     }
+  ];
+
+  const githubProjects = [
+    {
+      title: 'My Film',
+      description: 'PHP-based film project repository from GitHub. Added as a personal code project showcase.',
+      tags: ['PHP', 'Web App'],
+      url: 'https://github.com/yabeselkana/my-film',
+      year: '2026',
+    },
+    {
+      title: 'Library System',
+      description: 'Full-stack library application split into frontend and backend repositories.',
+      tags: ['JavaScript', 'Frontend', 'Backend'],
+      url: 'https://github.com/yabeselkana/FE_perpus',
+      secondaryUrl: 'https://github.com/yabeselkana/BE_perpus',
+      year: '2025',
+    },
+    {
+      title: 'Article Platform',
+      description: 'Article application with separate React frontend and backend service repositories.',
+      tags: ['React', 'JavaScript', 'API'],
+      url: 'https://github.com/yabeselkana/React_Articel_FE',
+      secondaryUrl: 'https://github.com/yabeselkana/React_Articel_Be',
+      year: '2024',
+    },
+    {
+      title: 'HireJob App',
+      description: 'Job hiring application with Next.js frontend and Express backend repositories.',
+      tags: ['Next.js', 'Express.js', 'JavaScript'],
+      url: 'https://github.com/yabeselkana/FE_Nextjs_Hirejob',
+      secondaryUrl: 'https://github.com/yabeselkana/BE_Hirejob',
+      year: '2024',
+    },
+    {
+      title: 'Blanja E-Commerce',
+      description: 'E-commerce project with React frontend and Express backend repositories.',
+      tags: ['React', 'Express.js', 'E-Commerce'],
+      url: 'https://github.com/yabeselkana/React_Blanja_FE',
+      secondaryUrl: 'https://github.com/yabeselkana/Express_Blanja_BE',
+      year: '2024',
+    },
+    {
+      title: 'Recipe Mobile App',
+      description: 'Recipe application using React Native with a supporting backend repository.',
+      tags: ['React Native', 'Backend', 'Mobile'],
+      url: 'https://github.com/yabeselkana/React_Native_Recipe',
+      secondaryUrl: 'https://github.com/yabeselkana/BackEnd_Recipe',
+      year: '2024',
+    },
+    {
+      title: 'Blog Lumen API',
+      description: 'Blog API project built with Laravel Lumen for backend service practice.',
+      tags: ['PHP', 'Laravel Lumen', 'API'],
+      url: 'https://github.com/yabeselkana/Blog_Laravel_lumen_Api',
+      year: '2024',
+    },
+    {
+      title: 'Profile Website',
+      description: 'Personal profile and portfolio website repository deployed as a public web project.',
+      tags: ['SCSS', 'Portfolio', 'Web'],
+      url: 'https://github.com/yabeselkana/profile-yabes',
+      demoUrl: 'https://yabes.vercel.app',
+      year: '2025',
+    },
   ];
 
   const getProjectIcon = (iconType: string) => {
@@ -59,12 +129,11 @@ const NotableProjects = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>
-            <span className={styles.titleHighlight}>Notable</span> Projects
+            {t('innovation.title')}
           </h2>
           <p className={styles.subtitle}>
-            Innovative solutions combining hardware and software technologies
+            {t('innovation.subtitle')}
           </p>
-          <div className={styles.titleUnderline}></div>
         </div>
 
         <div className={styles.projects}>
@@ -102,10 +171,50 @@ const NotableProjects = () => {
           ))}
         </div>
 
-        <div className={styles.floatingElements}>
-          <div className={styles.floatingIcon}></div>
-          <div className={styles.floatingIcon}></div>
-          <div className={styles.floatingIcon}></div>
+        <div className={styles.githubSection}>
+          <div className={styles.githubHeader}>
+            <h3 className={styles.githubTitle}>{t('innovation.github')}</h3>
+            <a
+              href="https://github.com/yabeselkana"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.githubProfileLink}
+            >
+              {t('innovation.github.view')}
+            </a>
+          </div>
+
+          <div className={styles.githubGrid}>
+            {githubProjects.map((project) => (
+              <article key={project.title} className={styles.githubCard}>
+                <div className={styles.githubCardHeader}>
+                  <h4>{project.title}</h4>
+                  <span>{project.year}</span>
+                </div>
+                <p>{project.description}</p>
+                <div className={styles.projectTags}>
+                  {project.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>{tag}</span>
+                  ))}
+                </div>
+                <div className={styles.githubActions}>
+                  <a href={project.url} target="_blank" rel="noopener noreferrer">
+                    {t('innovation.repo')}
+                  </a>
+                  {project.secondaryUrl && (
+                    <a href={project.secondaryUrl} target="_blank" rel="noopener noreferrer">
+                      {t('innovation.backend')}
+                    </a>
+                  )}
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                      {t('innovation.demo')}
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

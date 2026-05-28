@@ -1,7 +1,7 @@
 // ProfileHeader.tsx
 'use client';
-import React, { useState, useRef, ChangeEvent } from 'react';
-import { Phone, Mail, Linkedin, MapPin, Camera, Edit3, Upload, X, Download } from 'lucide-react';
+import React from 'react';
+import { Phone, Mail, Linkedin, MapPin, Download, ShieldCheck, Workflow, MonitorSmartphone } from 'lucide-react';
 import styles from './ProfileHeader.module.scss';
 
 interface ProfileHeaderProps {
@@ -20,81 +20,17 @@ interface ProfileHeaderProps {
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   name = "Yabes Elkana Zega",
-  title = "Web Developer",
+  title = "IT Consultant & Web Developer",
   location = "Bandung Jawa Barat, Indonesia",
   phone = "082163990631",
   email = "yabeszega1997@gmail.com",
   linkedinUrl = "https://linkedin.com/in/yabes-zega",
   linkedinUsername = "yabes-zega",
   initialProfilePhoto = '/yabes.png',
-  initialBackgroundPhoto = '/bg.jpg',
+  initialBackgroundPhoto,
   cvUrl = '/CV YABES ELKANA ZEGA.pdf',
   cvFileName = 'Yabes_Elkana_Zega_CV.pdf',
 }) => {
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(initialProfilePhoto);
-  const [backgroundPhoto, setBackgroundPhoto] = useState<string | null>(initialBackgroundPhoto);
-  const [isEditingProfile, setIsEditingProfile] = useState<boolean>(false);
-  const [isEditingBackground, setIsEditingBackground] = useState<boolean>(false);
-
-  const profileInputRef = useRef<HTMLInputElement>(null);
-  const backgroundInputRef = useRef<HTMLInputElement>(null);
-
-  const handleProfilePhotoChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const result = e.target?.result;
-        if (typeof result === 'string') {
-          setProfilePhoto(result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    setIsEditingProfile(false);
-  };
-
-  const handleBackgroundPhotoChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const result = e.target?.result;
-        if (typeof result === 'string') {
-          setBackgroundPhoto(result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    setIsEditingBackground(false);
-  };
-
-  const removeProfilePhoto = (): void => {
-    setProfilePhoto(null);
-    setIsEditingProfile(false);
-  };
-
-  const removeBackgroundPhoto = (): void => {
-    setBackgroundPhoto(null);
-    setIsEditingBackground(false);
-  };
-
-  const handleEditProfileToggle = (): void => {
-    setIsEditingProfile(!isEditingProfile);
-  };
-
-  const handleEditBackgroundToggle = (): void => {
-    setIsEditingBackground(!isEditingBackground);
-  };
-
-  const triggerProfileUpload = (): void => {
-    profileInputRef.current?.click();
-  };
-
-  const triggerBackgroundUpload = (): void => {
-    backgroundInputRef.current?.click();
-  };
-
   const handleDownloadCV = (): void => {
     if (cvUrl) {
       const link = document.createElement('a');
@@ -120,13 +56,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   return (
     <div className={styles.profileContainer}>
-      {/* Background Section */}
       <div className={styles.backgroundSection}>
-        {/* Background Image or Gradient */}
-        {backgroundPhoto ? (
+        {initialBackgroundPhoto ? (
           <div
             className={styles.backgroundImage}
-            style={{ backgroundImage: `url(${backgroundPhoto})` }}
+            style={{ backgroundImage: `url(${initialBackgroundPhoto})` }}
           >
             <div className={styles.backgroundOverlay}></div>
           </div>
@@ -135,53 +69,24 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <div className={styles.backgroundOverlay}></div>
           </div>
         )}
-
-        {/* Background Photo Controls */}
-        <div className={styles.backgroundControls}>
-          <button
-            onClick={handleEditBackgroundToggle}
-            className={styles.controlButton}
-            type="button"
-            aria-label="Edit background photo"
-          >
-            <Edit3 size={20} />
-          </button>
+        <div className={styles.heroPattern}>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-
-        {/* Background Edit Menu */}
-        {isEditingBackground && (
-          <div className={styles.editMenu}>
-            <button
-              onClick={triggerBackgroundUpload}
-              className={styles.menuItem}
-              type="button"
-            >
-              <Upload size={16} />
-              Upload Photo
-            </button>
-            {backgroundPhoto && (
-              <button
-                onClick={removeBackgroundPhoto}
-                className={`${styles.menuItem} ${styles.removeItem}`}
-                type="button"
-              >
-                <X size={16} />
-                Remove Photo
-              </button>
-            )}
-          </div>
-        )}
+        <div className={styles.heroCopy}>
+          <p className={styles.kicker}>Lead Consultant</p>
+          <h2>Technical partner for planning and delivery.</h2>
+        </div>
       </div>
 
-      {/* Profile Content */}
       <div className={styles.profileContent}>
-        {/* Profile Photo Section */}
         <div className={styles.profilePhotoWrapper}>
           <div className={styles.profilePhotoContainer}>
             <div className={styles.profilePhoto}>
-              {profilePhoto ? (
+              {initialProfilePhoto ? (
                 <img
-                  src={profilePhoto}
+                  src={initialProfilePhoto}
                   alt={`${name} profile picture`}
                   className={styles.profileImage}
                 />
@@ -191,46 +96,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 </div>
               )}
             </div>
-
-            {/* Profile Photo Controls */}
-            <div className={styles.profilePhotoOverlay}>
-              <button
-                onClick={handleEditProfileToggle}
-                className={styles.photoControlButton}
-                type="button"
-                aria-label="Edit profile photo"
-              >
-                <Camera size={20} />
-              </button>
-            </div>
-
-            {/* Profile Edit Menu */}
-            {isEditingProfile && (
-              <div className={styles.profileEditMenu}>
-                <button
-                  onClick={triggerProfileUpload}
-                  className={styles.menuItem}
-                  type="button"
-                >
-                  <Upload size={16} />
-                  Upload Photo
-                </button>
-                {profilePhoto && (
-                  <button
-                    onClick={removeProfilePhoto}
-                    className={`${styles.menuItem} ${styles.removeItem}`}
-                    type="button"
-                  >
-                    <X size={16} />
-                    Remove Photo
-                  </button>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Profile Info Section */}
         <div className={styles.profileInfo}>
           <div className={styles.profileDetails}>
             <h1 className={styles.profileName}>
@@ -243,6 +111,21 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               <MapPin size={18} />
               {location}
             </div>
+          </div>
+
+          <div className={styles.serviceHighlights}>
+            <span>
+              <ShieldCheck size={17} />
+              System Planning
+            </span>
+            <span>
+              <Workflow size={17} />
+              Web Development
+            </span>
+            <span>
+              <MonitorSmartphone size={17} />
+              Responsive UI
+            </span>
           </div>
 
           {/* Contact Information */}
@@ -309,24 +192,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Hidden File Inputs */}
-      <input
-        ref={profileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleProfilePhotoChange}
-        className={styles.hiddenInput}
-        aria-label="Upload profile photo"
-      />
-      <input
-        ref={backgroundInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleBackgroundPhotoChange}
-        className={styles.hiddenInput}
-        aria-label="Upload background photo"
-      />
     </div>
   );
 };
